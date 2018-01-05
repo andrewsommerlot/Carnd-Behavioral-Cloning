@@ -1,14 +1,15 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Using Convolutional Neural Networks to Automomously Steer a Car
 
 ---
 
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE "Video Title")
+
+
 **Behavioral Cloning Project**
 
-The goals / steps of this project are the following:
+My goals for this project are the following:
 * Use the simulator to collect data of good driving behavior
 * Build a convolution neural network in Keras that predicts steering angles from images
 * Train and validate the model with a training and validation set
@@ -20,16 +21,14 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./pics/placeholder.png "Model Visualization"
+[image2]: ./pics/placeholder.png "Grayscaling"
+[image3]: ./pics/placeholder_small.png "Recovery Image"
+[image4]: ./pics/placeholder_small.png "Recovery Image"
+[image5]: ./pics/placeholder_small.png "Recovery Image"
+[image6]: ./pics/placeholder_small.png "Normal Image"
+[image7]: ./pics/placeholder_small.png "Flipped Image"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
 
 ---
 ### Training data
@@ -78,7 +77,7 @@ In addition to the built in options, I wrote a function which creates a random n
 ### Model Architecture
 Over the course of this project I trained many different models with differnt architectures. I found that models with millions of parameters did not nessesarily perform better than models with only a few hunderd thousand. Additionaly, models with less than a million parameters more often generalized to track 1 and track 2 better. I trained the arcitecture below multple times and it performed consistantly well with different random samples of training data and different train test splits at around 10 epochs. 
 
-I started with a similar architecture to the class material, and eventually went with a model similar to Jeremy Shannon's in [https://github.com/jeremy-shannon/CarND-Behavioral-Cloning-Project] but with more layers, and a wider variety of hyper parameters in the convolutional layers. It is worth noting that many of the different architectures I tested performed well once the data was preprocessed and augmented, however, some performed better than others and this architecture consitantly perfromed well. 
+I started with a similar architecture to the class material, and eventually went with a model similar to Jeremy Shannon's in [https://github.com/jeremy-shannon/CarND-Behavioral-Cloning-Project]. It is worth noting that many of the different architectures I tested performed well once the data was preprocessed and augmented, however, some performed better than others and this architecture consistantly perfromed well. After testing relu, elu, tanh, and even a custom activation, I went with elu. My theory is that elu is a more symetrical function than relu, and may somehow provide better results across the regression range. I did not test this theory here in the interest of time. 
 
 
 
@@ -98,11 +97,14 @@ Additionally, I found samples per epoch and batch size to be very sensitive hype
 
 put the video here
 
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE "Video Title")
+
+
 ![alt text][image1]
 
-#### 2. Navigating Track 2
+#### 2. Not Navigating Track 2
 
-Unfortunately, my solution was not able to generalize completely to track 2. Interestingly, I found that a model with max pooling layers usually generalized better to track 2 than a model without, although it might drive track 1 a little worse. My solution descrived here contains no max pooling layers, as I wanted to be sure to navigate track 1.   
+Unfortunately, my solution was not able to generalize to track 2. Interestingly, I found that a model with max pooling layers usually generalized better to track 2 than a model without, although it might drive track 1 a little worse. My solution descrived here contains no max pooling layers, which consistantly navigated track 1. 
 
 ### Interpreting the Convolutional Neural Network
 
@@ -112,22 +114,14 @@ Spurred on by this failure to generalize to track 2, I decided to attempt a visu
 
 We build a lot of complex models at my current job which are used to make predictions and estimations that influence policy. In this application, it is of utmost importance that we can explain and describe how the models work and why they say what they say. I'm seeing an increasing focus on interpretation in the mahcine learning world as well, and in my oppinion it will be important for practitioners, especially in the deep learning field, to be able to look into the "darkness" of complex models and provide some understaning into how they work and why cerntain predictions happen when communicating with policy makers or legal professionals. 
 
-To take my own advice, I searched for different tools and found keras-vis [https://github.com/raghakot/keras-vis]. In order to use this here, I upgraded to keras 2.0. Building off a provided example [https://github.com/raghakot/keras-vis/blob/master/applications/self_driving/visualize_attention.ipynb] I wrote a function wich would overlay an attention map on recorded images from drive.py. Attention can loosely be interpreted as which parts of the image were important for the model to make a prediction. Since the behavioral cloning application is a regression of a variable with range [-1, 1] I repeated this process for large negetive steering angles (left turn), large positive steering angles (right turn), and small steering angles (maintain steering). 
+To take my own advice, I searched for different tools and found keras-vis [https://github.com/raghakot/keras-vis]. In order to use this here, I upgraded to keras 2.0. Building off a provided example [https://github.com/raghakot/keras-vis/blob/master/applications/self_driving/visualize_attention.ipynb] I wrote a function wich would overlay an attention map on recorded images from drive.py. Attention can loosely be interpreted as which parts of the image were important for the model to make a prediction. What I want to see is clear highlighting of lane lines, similar to the finding lane lines project. In my oppinion, this would indicate a model which understands that lane line are the most important object in predicting seering angles, rather than something else like shadows or peripheral objects. 
 
-#### 1. Visualizing the training process
+Since the behavioral cloning application is a regression of a variable with range [-1, 1] I repeated this process for large negetive steering angles (left turn), large positive steering angles (right turn), and small steering angles (maintain steering), following the referenced example. 
 
-Below is a video of the car navigating 1 left turn with the same model at various epochs with attention maps for left turn predictions. 
+#### 3. Visualizing left turn, right turn, and maintain steering attention. 
 
+Below is a video of the car navigating the track 1 bridge and the next 2 turns. I was harder to produce these videos than I expected, it just took a very long time to render the overlay images, so I'll stop here. It is encuraging to see the left turn will sometimes focus heavily on the right lane line, and the right turn on the left. The maintain straight signal seem to watch both lines most of the time. However, the attention is a bit noisy, and at times focuses heavily on peripheral objects, which likely causes overfitting to track 1 and the inability to generalize to track 2. 
 
-
-#### 2. Visualizing all attention maps 
-
-Below is a video of the car navigating part of track 1 with no attention map, and separate attention maps for left turn, right turn, and maintain steering. 
-
-
-#### 3. Visualizing track 2 failure
-
-Here is a crash on track 2 with no attention map, and separate attention maps for left turn, right turn, and maintain steering. 
 
 
 ### Conclusion
