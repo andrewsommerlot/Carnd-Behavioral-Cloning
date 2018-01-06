@@ -41,8 +41,7 @@ My goals for this project are the following:
 [image22]: ./pics/test_17.jpg "Training Example 18"
 [image23]: ./pics/test_18.jpg "Training Example 19"
 [image24]: ./pics/test_29.jpg "Training Example 20"
-[image25]: ./pics/test.jpg "Origial Collected Image"
-[image26]: ./pics/raw_example.jpg "Origial Collected Image"
+[image25]: ./pics/raw_example.jpg "Origial Collected Image"
 
 
 
@@ -59,7 +58,7 @@ Data was gathered from the simulator provided by Udacity. After considering the 
 
 Following these guidelines, I collected 13,701 images from track 1 only in the simulator. In the below example shows a typical image colleced. 
 
-![Raw Collected Image][image26]
+![Raw Collected Image][image25]
 
 
 #### 2. Data Preprocessing
@@ -69,11 +68,23 @@ After collecting data, I applied 3 major preprocessing operations to resulting i
 * Putting the doubled data set through up-and-down sampling to create a smaller data set which exibited a more uniform distribution over the steering angles.
 * A more aggresive cropping operation than was suggested in the class material
 
-Cropping was performed along with image and steering angle reflection (XXX). The more aggressive vertical crop (taking some pixes off the top and bottom to remove extraneous views above the road and the dash board) required editing the drive.py file (XXX) to be compatible with the new image size. 
+Here, the raw collected data was most often a negetive steering value close to zero. This was because the track was mostly oval and driven most often in a counter clockwise direction.
 
-These preprocessing steps were done in preperation of building a data generator to agument the existing data, which selects a random sample of images and performs some operations on them for each training batch. Through trial and error training of different models with data sets demonstrating different dependent variable distributions (right skewed, student's t) a data set with a more uniform distribution of steering angles was preferable. I wrote a function (XXX) that would down-or-up sample the total number of images and up-or-down sample images depending on their corresponding streering angle with a parameterized function based on a the shape of a parabola centered at steering angle zero and a selectable number of histogram bins. This way I could experiment with different sampling techniques and resulting dependent variable distributions. Again by trial and error, I found a 50 bin histogram with larger steering angles upsampled about 30% more more than those near zero consistantly trained models that easily navigated track 1. Also, bin size ended up being extremely important, as the specific images selected to be upsampled could be very different between 10, 20, 50, or more bins. More bins meant high steering angles were more likely to be well represented, and a lower number of bins made it more likely that a wider range of images would be in the final data set. It was very important to plot the data with a various number of histogram bins to get a good feel for the variable density through the steering angles.
+![Original Steering Angle Distribution of Collected Images][image2]
+
+After the reflecting process, the steering angle distribtion is more balanced. 
+
+![Steering Angle Distribution After Appending Addtional Reflected Data][image1]
 
 
+Cropping was performed along with image and steering angle reflection. The more aggressive vertical crop (taking some pixes off the top and bottom to remove extraneous views above the road and the dash board) required editing the drive.py file to be compatible with the new image size. 
+
+These preprocessing steps were done in preperation of building a data generator to agument the existing data, which selects a random sample of images and performs some operations on them for each training batch. Through trial and error training of different models with data sets demonstrating different dependent variable distributions (right skewed, student's t) a data set with a more uniform distribution of steering angles was preferable. I wrote a function that would down-or-up sample the total number of images and up-or-down sample images depending on their corresponding streering angle with a parameterized function based on a the shape of a parabola centered at steering angle zero and a selectable number of histogram bins. This way I could experiment with different sampling techniques and resulting dependent variable distributions. Again by trial and error, I found a 500 bin histogram with larger steering angles upsampled about 30% more than those near zero consistantly trained models that easily navigated track 1. Also, bin size ended up being extremely important, as the specific images selected to be upsampled could be very different between 10, 20, 50, or more bins. More bins meant high steering angles were more likely to be well represented, and a lower number of bins made it more likely that a wider range of images would be in the final data set. It was very important to plot the data with a various number of histogram bins to get a good feel for the variable density through the steering angles.
+
+
+![Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram][image3]
+
+![Final respampled distribution viewed with a 20 bin histogram][image4]
 
 
 Interestingly, I found that a nearly perfect uniform distribution was not a great indicator of future model performance on its own, but rather, there were optimum parameters and specific choices in the sampling process that produced consistantly better models. My hypothesis is that I didn't have enough variety of very large steering angles to upsample them so much, and ended up skewing the data to a large subset of very similar images. I left this hypotheis untested in this project, and rather took away the reinformcment that careful attention to the specific data at hand is important in machine learning applications. The field of neural computing is still new enough that emerging general guidelines are secondary to specific knowledge of data sets, the problem space in which complex models are trained and applied, and trial-and-error proof of concept. 
@@ -94,6 +105,8 @@ For the validation generator:
 * Custom random bright and dark spot function  
 
 In addition to the built in options, I wrote a function which creates a random number (from 0 to 5) of randomly bright and dark spots in addtion to the built-in options in image data generator. All of the parameters where chosen by trial and error model training. 
+
+Below are a number of examples from the validation generator. 
 
 ### Model Architecture
 Over the course of this project I trained many different models with differnt architectures. I found that models with millions of parameters did not nessesarily perform better than models with only a few hunderd thousand. Additionaly, models with less than a million parameters more often generalized to track 1 and track 2 better. I trained the arcitecture below multple times and it performed consistantly well with different random samples of training data and different train test splits at around 10 epochs. 
