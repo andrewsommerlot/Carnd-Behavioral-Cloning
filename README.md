@@ -59,7 +59,7 @@ Data was gathered from the simulator provided by Udacity. After considering the 
 Following these guidelines, I collected 13,701 images from track 1 only in the simulator. In the below example shows a typical image colleced. 
 
 ![Raw Collected Image][image25]
-
+Typical dash cam training image collected with the simulator.
 
 #### 2. Data Preprocessing
 After collecting data, I applied 3 major preprocessing operations to resulting images:
@@ -71,11 +71,11 @@ After collecting data, I applied 3 major preprocessing operations to resulting i
 Here, the raw collected data was most often a negetive steering value close to zero. This was because the track was mostly oval and driven most often in a counter clockwise direction.
 
 ![Original Steering Angle Distribution of Collected Images][image2]
+The original distribution has more negetive steering angles than positive. 
 
-After the reflecting process, the steering angle distribtion is more balanced. 
 
 ![Steering Angle Distribution After Appending Addtional Reflected Data][image1]
-
+After the reflecting process, the steering angle distribtion is more balanced.
 
 Cropping was performed along with image and steering angle reflection. The more aggressive vertical crop (taking some pixes off the top and bottom to remove extraneous views above the road and the dash board) required editing the drive.py file to be compatible with the new image size. 
 
@@ -83,7 +83,7 @@ These preprocessing steps were done in preperation of building a data generator 
 
 
 ![Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram][image3]
-Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram
+Steering ngle distribution for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram
 
 ![Final respampled distribution viewed with a 20 bin histogram][image4]
 Final respampled distribution viewed with a 20 bin histogram
