@@ -1,12 +1,8 @@
 # **Behavioral Cloning** 
 
-## Using Convolutional Neural Networks to Automomously Steer a Car
+## Using a Convolutional Neural Network to Automomously Steer a Car
 
 ---
-
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE "Video Title")
-
-
 **Behavioral Cloning Project**
 
 My goals for this project are the following:
@@ -21,13 +17,33 @@ My goals for this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./pics/placeholder.png "Model Visualization"
-[image2]: ./pics/placeholder.png "Grayscaling"
-[image3]: ./pics/placeholder_small.png "Recovery Image"
-[image4]: ./pics/placeholder_small.png "Recovery Image"
-[image5]: ./pics/placeholder_small.png "Recovery Image"
-[image6]: ./pics/placeholder_small.png "Normal Image"
-[image7]: ./pics/placeholder_small.png "Flipped Image"
+[image1]: ./pics/augmented_angles.png "Reflected Images"
+[image2]: ./pics/orignial_angles.png "Original Distribution"
+[image3]: ./pics/orig_and_new_dist.png "Resample Comparison"
+[image4]: ./pics/bins_20.png "20 Bins"
+[image5]: ./pics/test_0.jpg "Training Example 1"
+[image6]: ./pics/test_1.jpg "Training Example 2"
+[image7]: ./pics/test_2.jpg "Training Example 3"
+[image8]: ./pics/test_3.jpg "Training Example 4"
+[image9]: ./pics/test_4.jpg "Training Example 5"
+[image10]: ./pics/test_5.jpg "Training Example 6"
+[image11]: ./pics/test_6.jpg "Training Example 7"
+[image12]: ./pics/test_7.jpg "Training Example 8"
+[image13]: ./pics/test_8.jpg "Training Example 9"
+[image14]: ./pics/test_9.jpg "Training Example 10"
+[image15]: ./pics/test_10.jpg "Training Example 11"
+[image16]: ./pics/test_11.jpg "Training Example 12"
+[image17]: ./pics/test_12.jpg "Training Example 13"
+[image18]: ./pics/test_13.jpg "Training Example 14"
+[image19]: ./pics/test_14.jpg "Training Example 15"
+[image20]: ./pics/test_15.jpg "Training Example 16"
+[image21]: ./pics/test_16.jpg "Training Example 17"
+[image22]: ./pics/test_17.jpg "Training Example 18"
+[image23]: ./pics/test_18.jpg "Training Example 19"
+[image24]: ./pics/test_29.jpg "Training Example 20"
+[image25]: ./pics/test.jpg "Origial Collected Image"
+[image26]: ./pics/raw_example.jpg "Origial Collected Image"
+
 
 
 ---
@@ -41,7 +57,10 @@ Data was gathered from the simulator provided by Udacity. After considering the 
 * Drive backwards down the track as well as forwards 
 * Record repeat instances of navigating curves, begining at different locations in the lane
 
-Following these guidelines, I collected 13,701 images from track 1 only in the simulator. 
+Following these guidelines, I collected 13,701 images from track 1 only in the simulator. In the below example shows a typical image colleced. 
+
+![Raw Collected Image][image26]
+
 
 #### 2. Data Preprocessing
 After collecting data, I applied 3 major preprocessing operations to resulting images:
@@ -53,6 +72,8 @@ After collecting data, I applied 3 major preprocessing operations to resulting i
 Cropping was performed along with image and steering angle reflection (XXX). The more aggressive vertical crop (taking some pixes off the top and bottom to remove extraneous views above the road and the dash board) required editing the drive.py file (XXX) to be compatible with the new image size. 
 
 These preprocessing steps were done in preperation of building a data generator to agument the existing data, which selects a random sample of images and performs some operations on them for each training batch. Through trial and error training of different models with data sets demonstrating different dependent variable distributions (right skewed, student's t) a data set with a more uniform distribution of steering angles was preferable. I wrote a function (XXX) that would down-or-up sample the total number of images and up-or-down sample images depending on their corresponding streering angle with a parameterized function based on a the shape of a parabola centered at steering angle zero and a selectable number of histogram bins. This way I could experiment with different sampling techniques and resulting dependent variable distributions. Again by trial and error, I found a 50 bin histogram with larger steering angles upsampled about 30% more more than those near zero consistantly trained models that easily navigated track 1. Also, bin size ended up being extremely important, as the specific images selected to be upsampled could be very different between 10, 20, 50, or more bins. More bins meant high steering angles were more likely to be well represented, and a lower number of bins made it more likely that a wider range of images would be in the final data set. It was very important to plot the data with a various number of histogram bins to get a good feel for the variable density through the steering angles.
+
+
 
 
 Interestingly, I found that a nearly perfect uniform distribution was not a great indicator of future model performance on its own, but rather, there were optimum parameters and specific choices in the sampling process that produced consistantly better models. My hypothesis is that I didn't have enough variety of very large steering angles to upsample them so much, and ended up skewing the data to a large subset of very similar images. I left this hypotheis untested in this project, and rather took away the reinformcment that careful attention to the specific data at hand is important in machine learning applications. The field of neural computing is still new enough that emerging general guidelines are secondary to specific knowledge of data sets, the problem space in which complex models are trained and applied, and trial-and-error proof of concept. 
