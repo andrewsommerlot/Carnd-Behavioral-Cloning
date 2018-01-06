@@ -97,7 +97,10 @@ Additionally, I found samples per epoch and batch size to be very sensitive hype
 
 put the video here
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE "Video Title")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/asLGKnZJGkg/0.jpg)](https://youtu.be/asLGKnZJGkg "Navigating Track 1")
+
+
+https://youtu.be/kpIRXyjCRBU
 
 
 ![alt text][image1]
