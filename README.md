@@ -88,7 +88,7 @@ These preprocessing steps were done in preperation of building a data generator 
 
 ![Final respampled distribution viewed with a 20 bin histogram][image4]
 
-->**Final respampled distribution viewed with a 20 bin histogram<-
+->**Final respampled distribution viewed with a 20 bin histogram**<-
 
 Interestingly, I found that a nearly perfect uniform distribution was not a great indicator of future model performance on its own, but rather, there were optimum parameters and specific choices in the sampling process that produced consistantly better models. My hypothesis is that I didn't have enough variety of very large steering angles to upsample them so much, and ended up skewing the data to a large subset of very similar images. I left this hypotheis untested in this project, and rather took away the reinformcment that careful attention to the specific data at hand is important in machine learning applications. The field of neural computing is still new enough that emerging general guidelines are secondary to specific knowledge of data sets, the problem space in which complex models are trained and applied, and trial-and-error proof of concept. 
 
