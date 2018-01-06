@@ -83,10 +83,12 @@ These preprocessing steps were done in preperation of building a data generator 
 
 
 ![Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram][image3]
-Steering ngle distribution for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram
+
+->Steering ngle distribution for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram<-
 
 ![Final respampled distribution viewed with a 20 bin histogram][image4]
-Final respampled distribution viewed with a 20 bin histogram
+
+->**Final respampled distribution viewed with a 20 bin histogram<-
 
 Interestingly, I found that a nearly perfect uniform distribution was not a great indicator of future model performance on its own, but rather, there were optimum parameters and specific choices in the sampling process that produced consistantly better models. My hypothesis is that I didn't have enough variety of very large steering angles to upsample them so much, and ended up skewing the data to a large subset of very similar images. I left this hypotheis untested in this project, and rather took away the reinformcment that careful attention to the specific data at hand is important in machine learning applications. The field of neural computing is still new enough that emerging general guidelines are secondary to specific knowledge of data sets, the problem space in which complex models are trained and applied, and trial-and-error proof of concept. 
 
@@ -108,6 +110,7 @@ For the validation generator:
 In addition to the built in options, I wrote a function which creates a random number (from 0 to 5) of randomly bright and dark spots in addtion to the built-in options in image data generator. All of the parameters where chosen by trial and error model training. 
 
 Below are a number of examples from the validation generator.
+
 ![example][image5]
 ![example][image6]
 ![example][image7]
@@ -127,7 +130,7 @@ Below are a number of examples from the validation generator.
 ![example][image21]
 ![example][image22]
 ![example][image23]
-![example][image24]
+![][image24]
 
  
 ### Model Architecture
