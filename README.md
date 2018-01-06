@@ -95,12 +95,9 @@ Additionally, I found samples per epoch and batch size to be very sensitive hype
 
 #### 1. Navigating Track 1 
 
-put the video here
-
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/asLGKnZJGkg/0.jpg)](https://youtu.be/asLGKnZJGkg "Navigating Track 1")
 
 
-https://youtu.be/kpIRXyjCRBU
 
 
 ![alt text][image1]
@@ -109,7 +106,7 @@ https://youtu.be/kpIRXyjCRBU
 
 Unfortunately, my solution was not able to generalize to track 2. Interestingly, I found that a model with max pooling layers usually generalized better to track 2 than a model without, although it might drive track 1 a little worse. My solution descrived here contains no max pooling layers, which consistantly navigated track 1. 
 
-### Interpreting the Convolutional Neural Network
+### Interpreting the convolutional neural network
 
 #### 1. Motivation
 
@@ -121,10 +118,11 @@ To take my own advice, I searched for different tools and found keras-vis [https
 
 Since the behavioral cloning application is a regression of a variable with range [-1, 1] I repeated this process for large negetive steering angles (left turn), large positive steering angles (right turn), and small steering angles (maintain steering), following the referenced example. 
 
-#### 3. Visualizing left turn, right turn, and maintain steering attention. 
+#### 2. Visualizing left turn, right turn, and maintain steering attention. 
 
-Below is a video of the car navigating the track 1 bridge and the next 2 turns. I was harder to produce these videos than I expected, it just took a very long time to render the overlay images, so I'll stop here. It is encuraging to see the left turn will sometimes focus heavily on the right lane line, and the right turn on the left. The maintain straight signal seem to watch both lines most of the time. However, the attention is a bit noisy, and at times focuses heavily on peripheral objects, which likely causes overfitting to track 1 and the inability to generalize to track 2. 
+Below is a video of the car navigating the track 1 bridge and the next 2 turns. It was harder to produce these videos than I expected, it just took a very long time to render the overlay images, so I'll stop here. It is encuraging to see the left turn will sometimes focus heavily on the right lane line, and the right turn on the left line. The maintain straight signal seem to watch both lines most of the time. However, the attention is noisy, and at times focuses heavily on peripheral objects, which likely causes overfitting to track 1 and the inability to generalize to track 2. 
 
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/kpIRXyjCRBU/0.jpg)](https://youtu.be/kpIRXyjCRBU "Track 2 Crash")
 
 
 ### Conclusion
