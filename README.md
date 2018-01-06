@@ -83,9 +83,10 @@ These preprocessing steps were done in preperation of building a data generator 
 
 
 ![Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram][image3]
+Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram
 
 ![Final respampled distribution viewed with a 20 bin histogram][image4]
-
+Final respampled distribution viewed with a 20 bin histogram
 
 Interestingly, I found that a nearly perfect uniform distribution was not a great indicator of future model performance on its own, but rather, there were optimum parameters and specific choices in the sampling process that produced consistantly better models. My hypothesis is that I didn't have enough variety of very large steering angles to upsample them so much, and ended up skewing the data to a large subset of very similar images. I left this hypotheis untested in this project, and rather took away the reinformcment that careful attention to the specific data at hand is important in machine learning applications. The field of neural computing is still new enough that emerging general guidelines are secondary to specific knowledge of data sets, the problem space in which complex models are trained and applied, and trial-and-error proof of concept. 
 
@@ -93,23 +94,44 @@ Interestingly, I found that a nearly perfect uniform distribution was not a grea
 ### Data Augmentation
 
 I chose to use keras image data generator to augment the data set resulting from the preprocessing steps. I used a combination of the built in options and my own functions for data augmentation. In preperation for a training / validation split, I build a separate generator for each. I ended up useding slightly different parameters for training and validation generators. 
-For the training generator:  
+For the training generator: 
 * Randomly rotate image up to 15 degrees
 * Ranodm color channel Shift up to 35
 * Custom random bright and dark spot function
 
-For the validation generator:  
+For the validation generator: 
 * Randomly rotate image up to 20 degrees
 * width_shift_range 0.05
 * Ranodm color channel Shift up to 45
-* Custom random bright and dark spot function  
+* Custom random bright and dark spot function 
 
 In addition to the built in options, I wrote a function which creates a random number (from 0 to 5) of randomly bright and dark spots in addtion to the built-in options in image data generator. All of the parameters where chosen by trial and error model training. 
 
-Below are a number of examples from the validation generator. 
+Below are a number of examples from the validation generator.
+![example][image5]
+![example][image6]
+![example][image7]
+![example][image8]
+![example][image9]
+![example][image10]
+![example][image11]
+![example][image12]
+![example][image13]
+![example][image14]
+![example][image15]
+![example][image16]
+![example][image17]
+![example][image18]
+![example][image19]
+![example][image20]
+![example][image21]
+![example][image22]
+![example][image23]
+![example][image24]
 
+ 
 ### Model Architecture
-Over the course of this project I trained many different models with differnt architectures. I found that models with millions of parameters did not nessesarily perform better than models with only a few hunderd thousand. Additionaly, models with less than a million parameters more often generalized to track 1 and track 2 better. I trained the arcitecture below multple times and it performed consistantly well with different random samples of training data and different train test splits at around 10 epochs. 
+Over the course of this project I trained many different models with differnt architectures. I found that models with millions of parameters did not nessesarily perform better than models with only a few hunderd thousand. Additionaly, models with less than a million parameters more often generalized to track 1 and track 2 better. I trained the arcitecture below multple times and it performed consistantly well with different random samples of training data and different train test splits at around 10 epochs. The model presented here was trained for 20 epochs. 
 
 I started with a similar architecture to the class material, and eventually went with a model similar to Jeremy Shannon's in [https://github.com/jeremy-shannon/CarND-Behavioral-Cloning-Project]. It is worth noting that many of the different architectures I tested performed well once the data was preprocessed and augmented, however, some performed better than others and this architecture consistantly perfromed well. After testing relu, elu, tanh, and even a custom activation, I went with elu. My theory is that elu is a more symetrical function than relu, and may somehow provide better results across the regression range. I did not test this theory here in the interest of time. 
 
@@ -120,7 +142,7 @@ I started with a similar architecture to the class material, and eventually went
 The data was split into training and validation sets, and validation checks were performed after each training epoch. Although lower validation loss generally was evidence for a better model, this was not always the case. Sometimes, validation results seemed a poor predictor of model performance on new data. Additionally, depsite experimenting with a wide range of approaches and parameters, I rutinely saw a validation loss lower than training loss. After a while I defaulted to just testing the solution after training to a point where both losses were below 0.1 MSE. Currently, I don't have a good hypothesis for why this happened. The description below produced validation losses slightly more than training losses more often then most of my other approaches. 
 
 
-After some brief experimentation, I opted for the adam optimizer with a learning rate parameter of 0.0001 (XXXXXXXX). I saved different models at various epochs in during training to compare their attention maps later. The goal here was to have an oportunity to visualize what the network is learning and try to explain why it predicts a particular steering angle. In general, the model would start performing well at around 10 or more epochs with the learing rate set to 0.0001, and about 4 or 5 epochs when set to 0.001. However, I consistantly achieved a lower loss with a learning rate of 0.0001.  
+After some brief experimentation, I opted for the adam optimizer with a learning rate parameter of 0.0001. I saved different models at various epochs in during training to compare their attention maps later. The goal here was to have an oportunity to visualize what the network is learning and try to explain why it predicts a particular steering angle. In general, the model would start performing well at around 10 or more epochs with the learing rate set to 0.0001, and about 4 or 5 epochs when set to 0.001. However, I consistantly achieved a lower loss with a learning rate of 0.0001.
 
 Additionally, I found samples per epoch and batch size to be very sensitive hyper parameters during training. Through trial and error, I ended up with 5000 samples per epoch and a batch size of 32. I tried samples per epoch up to 15000 and as low as 500, and batch sizes ranging between 1 to 256. For the larger numbers, there seemed to be a loose threhold of diminishing returns in terms of final loss vs training time, and for the very low numbers, the final loss was usually worse. Some middling values seemed to perform consistantly better. 
 
@@ -130,11 +152,7 @@ Additionally, I found samples per epoch and batch size to be very sensitive hype
 #### 1. Navigating Track 1 
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/asLGKnZJGkg/0.jpg)](https://youtu.be/asLGKnZJGkg "Navigating Track 1")
-
-
-
-
-![alt text][image1]
+Navigating track 1 successfully. 
 
 #### 2. Not Navigating Track 2
 
@@ -154,7 +172,7 @@ Since the behavioral cloning application is a regression of a variable with rang
 
 #### 2. Visualizing left turn, right turn, and maintain steering attention. 
 
-Below is a video of the car navigating the track 1 bridge and the next 2 turns. It was harder to produce these videos than I expected, it just took a very long time to render the overlay images, so I'll stop here. It is encuraging to see the left turn will sometimes focus heavily on the right lane line, and the right turn on the left line. The maintain straight signal seem to watch both lines most of the time. However, the attention is noisy, and at times focuses heavily on peripheral objects, which likely causes overfitting to track 1 and the inability to generalize to track 2. 
+Below is a video of the dash cam from the car navigating the track 1 bridge and the next 2 turns with three different attention overlays. It is encuraging to see the left turn will sometimes focus heavily on the right lane line, and the right turn on the left line. The maintain straight signal seem to watch both lines most of the time. However, the attention is noisy, and at times focuses heavily on peripheral objects, which likely causes overfitting to track 1 and the inability to generalize to track 2. 
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/kpIRXyjCRBU/0.jpg)](https://youtu.be/kpIRXyjCRBU "Track 2 Crash")
 
