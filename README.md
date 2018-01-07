@@ -41,7 +41,7 @@ My goals for this project are the following:
 [image21]: ./pics/test_16.jpg "Training Example 17"
 [image22]: ./pics/test_17.jpg "Training Example 18"
 [image23]: ./pics/test_18.jpg "Training Example 19"
-[image24]: ./pics/test_29.jpg "Training Example 20"
+[image24]: ./pics/test_19.jpg "Training Example 20"
 [image25]: ./pics/raw_example.jpg "Origial Collected Image"
 [image26]: ./pics/model_structure.png "Model Structure"
 [image27]: ./pics/before_attention.jpg "Before Attention"
