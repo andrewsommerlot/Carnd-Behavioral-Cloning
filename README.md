@@ -44,7 +44,7 @@ My goals for this project are the following:
 [image24]: ./pics/test_29.jpg "Training Example 20"
 [image25]: ./pics/raw_example.jpg "Origial Collected Image"
 [image26]: ./pics/model_structure.png "Model Structure"
-[image27]: ./before_attention.jpg "Before Attention"
+[image27]: ./pics/before_attention.jpg "Before Attention"
 [image26]: ./pics/after_attention.jpg "After Attention"
 
 
@@ -79,7 +79,7 @@ Here, the raw collected data was most often a negetive steering value close to z
 ![Original Steering Angle Distribution of Collected Images][image2]
 
 **The original distribution has more negetive steering angles than positive.**
-
+f
 
 ![Steering Angle Distribution After Appending Addtional Reflected Data][image1]
 
@@ -92,7 +92,7 @@ These preprocessing steps were done in preperation of building a data generator 
 
 ![Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram][image3]
 
-**Steering ngle distribution for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram**
+**Steering angle distribution for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram**
 
 
 ![Final respampled distribution viewed with a 20 bin histogram][image4]
