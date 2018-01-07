@@ -44,7 +44,8 @@ My goals for this project are the following:
 [image24]: ./pics/test_29.jpg "Training Example 20"
 [image25]: ./pics/raw_example.jpg "Origial Collected Image"
 [image26]: ./pics/model_structure.png "Model Structure"
-
+[image27]: ./before_attention.jpg "Before Attention"
+[image26]: ./pics/after_attention.jpg "After Attention"
 
 
 ---
@@ -60,6 +61,7 @@ Data was gathered from the simulator provided by Udacity. After considering the 
 
 Following these guidelines, I collected 13,701 images from track 1 only in the simulator. In the below example shows a typical image colleced. 
 
+
 ![Raw Collected Image][image25]
 
 **Typical dash cam training image collected with the simulator.**
@@ -72,6 +74,7 @@ After collecting data, I applied 3 major preprocessing operations to resulting i
 * A more aggresive cropping operation than was suggested in the class material
 
 Here, the raw collected data was most often a negetive steering value close to zero. This was because the track was mostly oval and driven most often in a counter clockwise direction.
+
 
 ![Original Steering Angle Distribution of Collected Images][image2]
 
@@ -90,6 +93,7 @@ These preprocessing steps were done in preperation of building a data generator 
 ![Steering Angle Distribtion for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram][image3]
 
 **Steering ngle distribution for preprocessed (blue) and final respampled (orange) data sets in 500 bin histogram**
+
 
 ![Final respampled distribution viewed with a 20 bin histogram][image4]
 
@@ -143,6 +147,7 @@ Over the course of this project I trained many different models with differnt ar
 
 I started with a similar architecture to the class material, and eventually went with a model similar to Jeremy Shannon's in [https://github.com/jeremy-shannon/CarND-Behavioral-Cloning-Project]. It is worth noting that many of the different architectures I tested performed well once the data was preprocessed and augmented, however, some performed better than others and this architecture consistantly perfromed well. After testing relu, elu, tanh, and even a custom activation, I went with elu. My theory is that elu is a more symetrical function than relu, and may somehow provide better results across the regression range. I did not test this theory here in the interest of time. 
 
+
 ![Model Structure][image26]
 
 **Structure of Model Completing Track 1**
@@ -163,11 +168,18 @@ Additionally, I found samples per epoch and batch size to be very sensitive hype
 #### 1. Navigating Track 1 
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/asLGKnZJGkg/0.jpg)](https://youtu.be/asLGKnZJGkg "Navigating Track 1")
-Navigating track 1 successfully. 
+
+**Navigating track 1 successfully**
 
 #### 2. Not Navigating Track 2
 
 Unfortunately, my solution was not able to generalize to track 2. Interestingly, I found that a model with max pooling layers usually generalized better to track 2 than a model without, although it might drive track 1 a little worse. My solution descrived here contains no max pooling layers, which consistantly navigated track 1. 
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/asLGKnZJGkg/0.jpg)](https://youtu.be/asLGKnZJGkg "Navigating Track 1")
+
+**Navigating track 1 successfully**
+
+
 
 ### Interpreting the convolutional neural network
 
@@ -179,7 +191,16 @@ We build a lot of complex models at my current job which are used to make predic
 
 To take my own advice, I searched for different tools and found keras-vis [https://github.com/raghakot/keras-vis]. In order to use this here, I upgraded to keras 2.0. Building off a provided example [https://github.com/raghakot/keras-vis/blob/master/applications/self_driving/visualize_attention.ipynb] I wrote a function wich would overlay an attention map on recorded images from drive.py. Attention can loosely be interpreted as which parts of the image were important for the model to make a prediction. What I want to see is clear highlighting of lane lines, similar to the finding lane lines project. In my oppinion, this would indicate a model which understands that lane line are the most important object in predicting seering angles, rather than something else like shadows or peripheral objects. 
 
-Since the behavioral cloning application is a regression of a variable with range [-1, 1] I repeated this process for large negetive steering angles (left turn), large positive steering angles (right turn), and small steering angles (maintain steering), following the referenced example. 
+Since the behavioral cloning application is a regression of a variable with range [-1, 1] I repeated this process for large negetive steering angles (left turn), large positive steering angles (right turn), and small steering angles (maintain steering), following the referenced example. Below is an example of before and after overlaying an attention map for the small values. You can see that the lane lines are lit up, though the model is focusing on some peripheral objects. This is not a perfect view into how the network operates, but it does provide some interesting information. 
+
+![][image27]
+
+**Raw collected image**
+
+![][image28]
+
+**Image with attention overaly heat map, from low (blue) to high (red)**
+
 
 #### 2. Visualizing left turn, right turn, and maintain steering attention. 
 
