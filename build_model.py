@@ -32,7 +32,7 @@ from sklearn.model_selection import train_test_split
 # Read in training data 
 # from Udacity class material, reads in y
 lines = []
-with open('/home/andrewrs/Desktop/udacity/data/train3/driving_log.csv') as csvfile:
+with open('./data/train3/driving_log.csv') as csvfile:
 	reader = csv.reader(csvfile)
 	for line in reader:
 		lines.append(line)
@@ -45,7 +45,7 @@ for line in lines:
 		source_path = line[i]
 		# split character modified because image data was collected on windows 10
 		filename = source_path.split('\\')[-1]
-		current_path = '/home/andrewrs/Desktop/udacity/data/train3/IMG/' + filename
+		current_path = './data/IMG/' + filename
 		image = cv2.imread(current_path)
 		# add extra cropping
 		image_c = image[65:140,0:320,:]
@@ -62,20 +62,21 @@ for image, measurement in zip(images, measurements):
 	augmented_images.append(cv2.flip(image, 1))
 	augmented_measurements.append(measurement*-1.0)
 #====================================================================
+
 	
 #====================================================================
 # further processing by balancing steering angle values to get a more
 #   uniform distribution
 
-
 # produce random selection 
 # idea from https://stackoverflow.com/questions/19485641/python-random-sample-of-two-arrays-but-matching-indices
 
+# defines upsampling based on steering angle value
 def notch_calc(x, y_int):
     y = (x)**2 + y_int
     return y
 
-# big boi balance function. 
+# Resamples data set accroding to total number and notch_calc values 
 def balance_steering(X, y, num_bins, len_multiplier, notch = False, notch_multiplier = 3):
     y_trim = []
     X_trim = []
@@ -108,7 +109,7 @@ def balance_steering(X, y, num_bins, len_multiplier, notch = False, notch_multip
     
 # run the balance
 X_trim, y_trim = balance_steering(augmented_images, augmented_measurements, num_bins = 50, len_multiplier = .1, notch = True, notch_multiplier = .2)
-
+#====================================================================
 
 
 #====================================================================
@@ -133,6 +134,8 @@ y_train = np.array(y_trim)
 #====================================================================
 # now split into train and valid 
 X_valid, X_train, y_valid, y_train = train_test_split(X_train, y_train, test_size=0.8, shuffle = True, random_state=9323)
+#====================================================================
+
 
 #====================================================================
 # Keras !!2.0!! CNN. 5 convolutional layers and 4 fully connected with dropout. 
@@ -145,10 +148,9 @@ X_valid, X_train, y_valid, y_train = train_test_split(X_train, y_train, test_siz
 #  Adding one activation function sandwiched between to fully connected linear layers 
 #   provided a more ideal amount of response. 
 # Trained with MSE as loss function and adam optimizer from Keras. 
+#====================================================================
 
-# image data generator: 
-# source[https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html]
-
+#====================================================================
 # build some custom functions. 
 # random dark spots
  #  inspired by jermomy shannon
@@ -174,6 +176,11 @@ def random_spot(img):
             mask[mask < 0] = 0
             new_img[r_1:r_3, c_1:c_3:] =  mask 
     return new_img
+#====================================================================
+
+#====================================================================
+# image data generator: 
+# source[https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html]
 
 # training generator
 datagen_train = ImageDataGenerator(
@@ -228,37 +235,36 @@ datagen_valid.fit(X_valid)
 # comment out when running whole script
 
 # use the generator object to print training data examples
-X_valid_b, y_valid_b = next(datagen_valid.flow(X_valid, y_valid, batch_size=20))
+#X_valid_b, y_valid_b = next(datagen_valid.flow(X_valid, y_valid, batch_size=20))
 
 # take a look at some pics
-for i in range(0,20):
-    cv2.imwrite('test_' + str(i) + '.jpg', X_valid_b[i])
+#for i in range(0,20):
+#    cv2.imwrite('test_' + str(i) + '.jpg', X_valid_b[i])
     
 #=======================================================================
+
 
 #=======================================================================
 # set up the flow method !! sets up for fit generator
 train_generator = datagen_valid.flow(X_train, y_train, batch_size=32)
 valid_generator = datagen_valid.flow(X_valid, y_valid, batch_size=32)
 #valid_generator = datagen_valid.flow(X_train, y_train, batch_size=64)
+#=======================================================================
+
 
 #=======================================================================
 # begin model
 model = Sequential()
 model.add(Lambda(lambda x: x/255 - 0.5, input_shape = (75,320,3)))
-model.add(Conv2D(24, (7, 7), strides = (2,2), activation = "elu", kernel_regularizer = l2(.00001)))
-model.add(Conv2D(36, (7, 7), strides = (2,2), activation = "elu", kernel_regularizer = l2(.00001)))
-model.add(Conv2D(48, (5, 5), strides = (2,2), activation = "elu", kernel_regularizer = l2(.00001)))
-#model.add(MaxPooling2D(pool_size=(2, 1), strides=None, padding='same'))
-model.add(Conv2D(64, (3, 3), activation = "elu", kernel_regularizer = l2(.00001)))
-#model.add(MaxPooling2D(pool_size=(2, 1), strides=None, padding='same'))
-#model.add(Conv2D(64, (3, 3), activation = "elu", kernel_regularizer = l2(.00001)))
-model.add(Conv2D(96, (3, 3), activation = "elu", kernel_regularizer = l2(.00001)))
-model.add(Conv2D(128, (2, 2), activation = "elu", kernel_regularizer = l2(.00001)))
+model.add(Conv2D(24, (5, 5), strides = (2,2), activation = "elu", kernel_regularizer = l2(.0001)))
+model.add(Conv2D(36, (5, 5), strides = (2,2), activation = "elu", kernel_regularizer = l2(.0001)))
+model.add(Conv2D(48, (3, 3), activation = "elu", kernel_regularizer = l2(.0001)))
+model.add(Conv2D(64, (3, 3), activation = "elu", kernel_regularizer = l2(.0001)))
+model.add(Conv2D(64, (3, 3), activation = "elu", kernel_regularizer = l2(.0001)))
 model.add(Flatten())
-model.add(Dense(100, kernel_regularizer = l2(.00001), activation = 'elu'))
-model.add(Dense(25,  kernel_regularizer = l2(.00001), activation = 'elu'))
-model.add(Dense(10, kernel_regularizer = l2(.00001), activation = "elu"))
+model.add(Dense(100, kernel_regularizer = l2(.0001), activation = 'elu'))
+model.add(Dense(25,  kernel_regularizer = l2(.0001), activation = 'elu'))
+model.add(Dense(10, kernel_regularizer = l2(.0001), activation = "elu"))
 model.add(Dense(1))
 adam = Adam(lr = 0.0001)
 model.compile(optimizer = adam, loss='mse')
@@ -273,11 +279,11 @@ model.fit_generator(
         train_generator,
         #steps_per_epoch= 200,
         samples_per_epoch = 5000, 
-        epochs=11,
+        epochs=20,
         validation_data = valid_generator,
         validation_steps = 50)
 
-model.save('reg_1-5_ep_11.h5')
+model.save('model.h5')
 
 exit()
 #====================================================================
