@@ -14,6 +14,7 @@ My goals for this project are the following:
 * Describe the process and summarize results
 * Provide insight into the processes described in the model through visulizing attention
 
+**Note: the data included in this repository in the "data" folder is not the data used to train the model, it is only there for example purposes only due to the data set size**
 
 [//]: # (Image References)
 
@@ -42,6 +43,7 @@ My goals for this project are the following:
 [image23]: ./pics/test_18.jpg "Training Example 19"
 [image24]: ./pics/test_29.jpg "Training Example 20"
 [image25]: ./pics/raw_example.jpg "Origial Collected Image"
+[image26]: ./pics/model_structure.png "Model Structure"
 
 
 
@@ -141,6 +143,9 @@ Over the course of this project I trained many different models with differnt ar
 
 I started with a similar architecture to the class material, and eventually went with a model similar to Jeremy Shannon's in [https://github.com/jeremy-shannon/CarND-Behavioral-Cloning-Project]. It is worth noting that many of the different architectures I tested performed well once the data was preprocessed and augmented, however, some performed better than others and this architecture consistantly perfromed well. After testing relu, elu, tanh, and even a custom activation, I went with elu. My theory is that elu is a more symetrical function than relu, and may somehow provide better results across the regression range. I did not test this theory here in the interest of time. 
 
+![Model Structure][image26]
+
+**Structure of Model Completing Track 1**
 
 
 ### Model training
@@ -180,7 +185,7 @@ Since the behavioral cloning application is a regression of a variable with rang
 
 Below is a video of the dash cam from the car navigating the track 1 bridge and the next 2 turns with three different attention overlays. It is encuraging to see the left turn will sometimes focus heavily on the right lane line, and the right turn on the left line. The maintain straight signal seem to watch both lines most of the time. However, the attention is noisy, and at times focuses heavily on peripheral objects, which likely causes overfitting to track 1 and the inability to generalize to track 2. 
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/kpIRXyjCRBU/0.jpg)](https://youtu.be/kpIRXyjCRBU "Track 2 Crash")
+[![](http://img.youtube.com/vi/kpIRXyjCRBU/0.jpg)](https://youtu.be/kpIRXyjCRBU "Attention")
 
 
 ### Conclusion
