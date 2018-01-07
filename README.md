@@ -120,26 +120,26 @@ In addition to the built in options, I wrote a function which creates a random n
 
 Below are a number of examples from the validation generator.
 
-![example][image5]
-![example][image6]
-![example][image7]
-![example][image8]
-![example][image9]
-![example][image10]
-![example][image11]
-![example][image12]
-![example][image13]
-![example][image14]
-![example][image15]
-![example][image16]
-![example][image17]
-![example][image18]
-![example][image19]
-![example][image20]
-![example][image21]
-![example][image22]
-![example][image23]
-![][image24]
+![example1][image5]
+![example2][image6]
+![example3][image7]
+![example4][image8]
+![example5][image9]
+![example6][image10]
+![example7][image11]
+![example8][image12]
+![example9][image13]
+![example10][image14]
+![example11][image15]
+![example12][image16]
+![example13][image17]
+![example14][image18]
+![example15][image19]
+![example16][image20]
+![example17][image21]
+![example18][image22]
+![example19][image23]
+![example20][image24]
 
  
 ### Model Architecture
@@ -193,11 +193,11 @@ To take my own advice, I searched for different tools and found keras-vis [https
 
 Since the behavioral cloning application is a regression of a variable with range [-1, 1] I repeated this process for large negetive steering angles (left turn), large positive steering angles (right turn), and small steering angles (maintain steering), following the referenced example. Below is an example of before and after overlaying an attention map for the small values. You can see that the lane lines are lit up, though the model is focusing on some peripheral objects. This is not a perfect view into how the network operates, but it does provide some interesting information. 
 
-![][image27]
+![raw image][image27]
 
 **Raw collected image**
 
-![][image28]
+![attention image][image28]
 
 **Image with attention overaly heat map, from low (blue) to high (red)**
 
