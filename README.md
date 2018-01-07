@@ -45,7 +45,7 @@ My goals for this project are the following:
 [image25]: ./pics/raw_example.jpg "Origial Collected Image"
 [image26]: ./pics/model_structure.png "Model Structure"
 [image27]: ./pics/before_attention.jpg "Before Attention"
-[image26]: ./pics/after_attention.jpg "After Attention"
+[image28]: ./pics/after_attention.jpg "After Attention"
 
 
 ---
