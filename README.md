@@ -175,9 +175,9 @@ Additionally, I found samples per epoch and batch size to be very sensitive hype
 
 Unfortunately, my solution was not able to generalize to track 2. Interestingly, I found that a model with max pooling layers usually generalized better to track 2 than a model without, although it might drive track 1 a little worse. My solution descrived here contains no max pooling layers, which consistantly navigated track 1. 
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/asLGKnZJGkg/0.jpg)](https://youtu.be/asLGKnZJGkg "Navigating Track 1")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/dEu67o4b_PE/0.jpg)](https://youtu.be/dEu67o4b_PE "Not Navigating Track 2")
 
-**Navigating track 1 successfully**
+**Navigating track 2 to the first big turn**
 
 
 
