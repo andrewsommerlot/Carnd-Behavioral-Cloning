@@ -1,6 +1,6 @@
 # **Behavioral Cloning** 
 
-## Using a Convolutional Neural Network to Automomously Steer a Car
+## Using a Convolutional Neural Network to Autonomously Steer a Car
 
 ---
 **Behavioral Cloning Project**
